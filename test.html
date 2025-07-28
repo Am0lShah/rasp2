@@ -46,7 +46,6 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            max-height: calc(100vh - 18vh);
         }
         
         .media-item {
@@ -55,6 +54,7 @@
             object-fit: contain;
             width: auto;
             height: auto;
+            display: block;
         }
         
         .error-message {
@@ -83,9 +83,9 @@
         
         /* Important notice section */
         .notice-section {
-            flex: 0 0 8vh;
-            min-height: 8vh;
-            max-height: 8vh;
+            flex: 0 0 7vh;
+            min-height: 7vh;
+            max-height: 7vh;
         }
         
         /* Main content area */
@@ -94,14 +94,13 @@
             display: flex;
             min-height: 0;
             overflow: hidden;
-            height: calc(100vh - 18vh); /* 100vh - notice(8vh) - ad(10vh) */
         }
         
         /* Advertisement section */
         .ad-section {
-            flex: 0 0 10vh;
-            min-height: 10vh;
-            max-height: 10vh;
+            flex: 0 0 8vh;
+            min-height: 8vh;
+            max-height: 8vh;
         }
         
         /* Responsive text sizes */
@@ -125,16 +124,16 @@
 <body class="bg-gray-100">
     <div class="main-container">
         <!-- Important Notice Section - Red Banner -->
-        <div class="notice-section bg-red-600 text-white overflow-hidden flex items-center">
+        <div class="notice-section bg-red-600 text-white overflow-hidden flex items-center" style="border: 2px solid blue;">
             <div class="scroll-text whitespace-nowrap notice-text font-bold w-full">
                 Impeachment motion for Justice Yashwant Verma to be raised in Lok Sabha: Kiren Rijiju
             </div>
         </div>
         
         <!-- Main Content Area -->
-        <div class="content-section">
+        <div class="content-section" style="border: 2px solid green;">
             <!-- Video/Image Section - Left Column (2/3 width) -->
-            <div class="w-2/3 bg-cyan-200 flex items-center justify-center p-2 relative">
+            <div class="w-2/3 bg-cyan-200 flex items-center justify-center p-2 relative overflow-hidden">
                 <div class="media-container">
                     <img id="mediaDisplay" src="/media/image1.png" alt="Media Display" class="media-item" onerror="handleMediaError(this)">
                     <video id="videoDisplay" class="media-item" style="display: none;" autoplay muted loop onerror="handleMediaError(this)">
@@ -182,7 +181,7 @@
         </div>
         
         <!-- Advertisement Section - Black Banner -->
-        <div class="ad-section bg-black text-white overflow-hidden flex items-center">
+        <div class="ad-section bg-black text-white overflow-hidden flex items-center" style="border: 2px solid red;">
             <div class="scroll-text whitespace-nowrap ad-text font-semibold w-full">
                 Special Offer: Get 50% off on all electronics this week!
             </div>
@@ -326,6 +325,21 @@
         // Call on load and resize
         window.addEventListener('load', adjustLayout);
         window.addEventListener('resize', adjustLayout);
+        
+        // Debug: Log dimensions
+        window.addEventListener('load', function() {
+            const mainContainer = document.querySelector('.main-container');
+            const noticeSection = document.querySelector('.notice-section');
+            const contentSection = document.querySelector('.content-section');
+            const adSection = document.querySelector('.ad-section');
+            
+            console.log('Main container height:', mainContainer.offsetHeight);
+            console.log('Notice section height:', noticeSection.offsetHeight);
+            console.log('Content section height:', contentSection.offsetHeight);
+            console.log('Ad section height:', adSection.offsetHeight);
+            console.log('Total height:', noticeSection.offsetHeight + contentSection.offsetHeight + adSection.offsetHeight);
+            console.log('Viewport height:', window.innerHeight);
+        });
     </script>
 </body>
 </html> 
