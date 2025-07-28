@@ -124,14 +124,14 @@
 <body class="bg-gray-100">
     <div class="main-container">
         <!-- Important Notice Section - Red Banner -->
-        <div class="notice-section bg-red-600 text-white overflow-hidden flex items-center" style="border: 2px solid blue;">
+        <div class="notice-section bg-red-600 text-white overflow-hidden flex items-center">
             <div class="scroll-text whitespace-nowrap notice-text font-bold w-full">
                 Impeachment motion for Justice Yashwant Verma to be raised in Lok Sabha: Kiren Rijiju
             </div>
         </div>
         
         <!-- Main Content Area -->
-        <div class="content-section" style="border: 2px solid green;">
+        <div class="content-section">
             <!-- Video/Image Section - Left Column (2/3 width) -->
             <div class="w-2/3 bg-cyan-200 flex items-center justify-center p-2 relative overflow-hidden">
                 <div class="media-container">
@@ -181,7 +181,7 @@
         </div>
         
         <!-- Advertisement Section - Black Banner -->
-        <div class="ad-section bg-black text-white overflow-hidden flex items-center" style="border: 2px solid red;">
+        <div class="ad-section bg-black text-white overflow-hidden flex items-center">
             <div class="scroll-text whitespace-nowrap ad-text font-semibold w-full">
                 Special Offer: Get 50% off on all electronics this week!
             </div>
@@ -326,20 +326,7 @@
         window.addEventListener('load', adjustLayout);
         window.addEventListener('resize', adjustLayout);
         
-        // Debug: Log dimensions
-        window.addEventListener('load', function() {
-            const mainContainer = document.querySelector('.main-container');
-            const noticeSection = document.querySelector('.notice-section');
-            const contentSection = document.querySelector('.content-section');
-            const adSection = document.querySelector('.ad-section');
-            
-            console.log('Main container height:', mainContainer.offsetHeight);
-            console.log('Notice section height:', noticeSection.offsetHeight);
-            console.log('Content section height:', contentSection.offsetHeight);
-            console.log('Ad section height:', adSection.offsetHeight);
-            console.log('Total height:', noticeSection.offsetHeight + contentSection.offsetHeight + adSection.offsetHeight);
-            console.log('Viewport height:', window.innerHeight);
-        });
+
     </script>
 </body>
 </html> 
