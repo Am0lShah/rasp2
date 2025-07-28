@@ -1,13 +1,13 @@
 [build]
-  publish = "."
-  command = "echo 'Serving static HTML file'"
+  publish = "dist"
+  command = "bash build.sh"
 
 [build.environment]
   NODE_VERSION = "18"
 
 [[redirects]]
   from = "/*"
-  to = "/test.html"
+  to = "/index.html"
   status = 200
 
 [dev]
