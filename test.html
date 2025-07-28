@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Display System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+        
+        .slide-up {
+            animation: slideUp 4s ease-in-out infinite;
+        }
+        
+        .scroll-text {
+            animation: scrollRight 15s linear infinite;
+        }
+        
+        @keyframes scrollRight {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .media-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .media-item {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            width: auto;
+            height: auto;
+        }
+        
+        .error-message {
+            color: #666;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Ensure the page takes full viewport height */
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Main container with flex layout */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            min-height: 100vh;
+        }
+        
+        /* Important notice section */
+        .notice-section {
+            flex: 0 0 auto;
+            min-height: 60px;
+            max-height: 60px;
+        }
+        
+        /* Main content area */
+        .content-section {
+            flex: 1;
+            display: flex;
+            min-height: 0;
+            overflow: hidden;
+        }
+        
+        /* Advertisement section */
+        .ad-section {
+            flex: 0 0 auto;
+            min-height: 50px;
+            max-height: 50px;
+        }
+        
+        /* Responsive text sizes */
+        .notice-text {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+        }
+        
+        .ad-text {
+            font-size: clamp(0.875rem, 1.5vw, 1.25rem);
+        }
+        
+        .announcement-text {
+            font-size: clamp(0.75rem, 1.2vw, 1rem);
+        }
+        
+        .section-title {
+            font-size: clamp(1rem, 1.5vw, 1.5rem);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="main-container">
+        <!-- Important Notice Section - Red Banner -->
+        <div class="notice-section bg-red-600 text-white overflow-hidden flex items-center">
+            <div class="scroll-text whitespace-nowrap notice-text font-bold w-full">
+                Impeachment motion for Justice Yashwant Verma to be raised in Lok Sabha: Kiren Rijiju
+            </div>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div class="content-section">
+            <!-- Video/Image Section - Left Column (2/3 width) -->
+            <div class="w-2/3 bg-cyan-200 flex items-center justify-center p-2 relative">
+                <div class="media-container">
+                    <img id="mediaDisplay" src="/media/image1.png" alt="Media Display" class="media-item" onerror="handleMediaError(this)">
+                    <video id="videoDisplay" class="media-item" style="display: none;" autoplay muted loop onerror="handleMediaError(this)">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div id="errorDisplay" class="error-message" style="display: none;">
+                        <div class="text-4xl mb-4">📺</div>
+                        <div>Media Display</div>
+                        <div class="text-sm mt-2">Slideshow Active</div>
+                    </div>
+                </div>
+                
+                <!-- Indicator dots -->
+                <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    <div class="w-2 h-2 rounded-full bg-white" id="dot1"></div>
+                    <div class="w-2 h-2 rounded-full bg-white/50" id="dot2"></div>
+                    <div class="w-2 h-2 rounded-full bg-white/50" id="dot3"></div>
+                    <div class="w-2 h-2 rounded-full bg-white/50" id="dot4"></div>
+                </div>
+            </div>
+            
+            <!-- Regular Announcement Section - Right Column (1/3 width) -->
+            <div class="w-1/3 bg-green-600 text-white flex items-center justify-center p-4 relative overflow-hidden">
+                <div class="text-center w-full">
+                    <h2 class="section-title font-bold mb-2">Regular</h2>
+                    <h3 class="section-title mb-4">Announcement</h3>
+                    
+                    <div class="h-24 flex items-center justify-center">
+                        <div id="announcementText" class="announcement-text font-medium text-center px-2 slide-up">
+                            Breaking: New COVID-19 variant detected in multiple countries
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Indicator -->
+                <div class="absolute bottom-2 flex space-x-1">
+                    <div class="w-1.5 h-1.5 rounded-full bg-white" id="announcementDot1"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-white/50" id="announcementDot2"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-white/50" id="announcementDot3"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-white/50" id="announcementDot4"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-white/50" id="announcementDot5"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-white/50" id="announcementDot6"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Advertisement Section - Black Banner -->
+        <div class="ad-section bg-black text-white overflow-hidden flex items-center">
+            <div class="scroll-text whitespace-nowrap ad-text font-semibold w-full">
+                Special Offer: Get 50% off on all electronics this week!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Media slideshow functionality
+        const mediaItems = [
+            { type: 'image', src: '/media/image1.png' },
+            { type: 'image', src: '/media/image2.jpg' },
+            { type: 'video', src: '/media/video1.mp4' },
+            { type: 'video', src: '/media/video2.mp4' }
+        ];
+        
+        const announcements = [
+            "Breaking: New COVID-19 variant detected in multiple countries",
+            "Sports: India wins the cricket series against Australia",
+            "Technology: Apple announces new iPhone with advanced features",
+            "Weather: Heavy rainfall expected in northern regions",
+            "Politics: Cabinet reshuffle expected this week",
+            "Business: Stock market reaches new all-time high"
+        ];
+        
+        const adTexts = [
+            "Special Offer: Get 50% off on all electronics this week!",
+            "New Restaurant Opening: Taste the best cuisine in town",
+            "Limited Time Deal: Book your vacation now and save big!",
+            "Flash Sale: Designer clothes at unbelievable prices",
+            "Don't Miss Out: Premium subscription at half price"
+        ];
+        
+        let currentMediaIndex = 0;
+        let currentAnnouncementIndex = 0;
+        let currentAdIndex = 0;
+        
+        function handleMediaError(element) {
+            console.log('Media error, showing fallback');
+            document.getElementById('mediaDisplay').style.display = 'none';
+            document.getElementById('videoDisplay').style.display = 'none';
+            document.getElementById('errorDisplay').style.display = 'flex';
+        }
+        
+        // Add load event listeners for debugging
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageDisplay = document.getElementById('mediaDisplay');
+            const videoDisplay = document.getElementById('videoDisplay');
+            
+            imageDisplay.addEventListener('load', function() {
+                console.log('Image loaded successfully:', imageDisplay.src);
+            });
+            
+            imageDisplay.addEventListener('error', function() {
+                console.log('Image failed to load:', imageDisplay.src);
+                handleMediaError();
+            });
+            
+            videoDisplay.addEventListener('loadeddata', function() {
+                console.log('Video loaded successfully:', videoDisplay.src);
+            });
+            
+            videoDisplay.addEventListener('error', function() {
+                console.log('Video failed to load:', videoDisplay.src);
+                handleMediaError();
+            });
+        });
+        
+        function showMediaItem(item) {
+            const imageDisplay = document.getElementById('mediaDisplay');
+            const videoDisplay = document.getElementById('videoDisplay');
+            const errorDisplay = document.getElementById('errorDisplay');
+            
+            console.log('Showing media item:', item);
+            
+            // Hide all displays first
+            imageDisplay.style.display = 'none';
+            videoDisplay.style.display = 'none';
+            errorDisplay.style.display = 'none';
+            
+            if (item.type === 'image') {
+                imageDisplay.src = item.src;
+                imageDisplay.style.display = 'block';
+                console.log('Image loaded:', item.src);
+            } else if (item.type === 'video') {
+                videoDisplay.src = item.src;
+                videoDisplay.style.display = 'block';
+                // Try to play the video
+                videoDisplay.play().catch(e => {
+                    console.log('Video play failed, showing fallback');
+                    handleMediaError();
+                });
+                console.log('Video loaded:', item.src);
+            }
+        }
+        
+        // Media slideshow
+        setInterval(() => {
+            currentMediaIndex = (currentMediaIndex + 1) % mediaItems.length;
+            const currentItem = mediaItems[currentMediaIndex];
+            
+            showMediaItem(currentItem);
+            
+            // Update dots
+            document.querySelectorAll('[id^="dot"]').forEach((dot, index) => {
+                dot.className = index === currentMediaIndex ? 'w-2 h-2 rounded-full bg-white' : 'w-2 h-2 rounded-full bg-white/50';
+            });
+        }, 5000);
+        
+        // Announcement slideshow
+        setInterval(() => {
+            currentAnnouncementIndex = (currentAnnouncementIndex + 1) % announcements.length;
+            document.getElementById('announcementText').textContent = announcements[currentAnnouncementIndex];
+            
+            // Update announcement dots
+            document.querySelectorAll('[id^="announcementDot"]').forEach((dot, index) => {
+                dot.className = index === currentAnnouncementIndex ? 'w-1.5 h-1.5 rounded-full bg-white' : 'w-1.5 h-1.5 rounded-full bg-white/50';
+            });
+        }, 4000);
+        
+        // Advertisement slideshow
+        setInterval(() => {
+            currentAdIndex = (currentAdIndex + 1) % adTexts.length;
+            document.querySelector('.scroll-text:last-child').textContent = adTexts[currentAdIndex];
+        }, 8000);
+        
+        // Initialize first media item
+        showMediaItem(mediaItems[0]);
+        
+        // Ensure the layout fits the viewport
+        function adjustLayout() {
+            const vh = window.innerHeight;
+            const vw = window.innerWidth;
+            
+            // Adjust font sizes based on viewport
+            const scale = Math.min(vh / 800, vw / 1200, 1);
+            
+            // Update CSS custom properties for responsive sizing
+            document.documentElement.style.setProperty('--scale', scale);
+        }
+        
+        // Call on load and resize
+        window.addEventListener('load', adjustLayout);
+        window.addEventListener('resize', adjustLayout);
+    </script>
+</body>
+</html> 
